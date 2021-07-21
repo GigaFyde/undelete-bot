@@ -1,0 +1,49 @@
+import java.time.Clock
+
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.google.cloud.tools.jib' version '3.1.0'
+}
+
+group 'dev.gigafyde'
+version '1.0-SNAPSHOT'
+
+mainClassName = 'dev.gigafyde.undelete.Main'
+sourceCompatibility = 11
+targetCompatibility = 11
+
+repositories {
+    mavenCentral()
+    maven {
+        name 'm2-dv8tion'
+        url 'https://m2.dv8tion.net/releases'
+    }
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/com.google.guava/guava
+    implementation group: 'com.google.guava', name: 'guava', version: '30.1-jre'
+    implementation("net.dv8tion:JDA:4.3.0_277") {
+        exclude module: "opus-java"
+    }
+}
+
+jib {
+    container {
+        mainClassName='dev.gigafyde.undelete.Main'
+        creationTime = Clock.systemUTC().instant()
+    }
+}
+
+
+compileJava {
+    classpath = sourceSets.main.compileClasspath
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    options.compilerArgs << '-Xlint:unchecked'
+    options.deprecation = true
+}
