@@ -29,6 +29,9 @@ dependencies {
 }
 
 jib {
+    from {
+        image = 'adoptopenjdk/openjdk16:jre-16.0.1_9-ubuntu'
+    }
     container {
         mainClassName='dev.gigafyde.undelete.Main'
         creationTime = Clock.systemUTC().instant()
