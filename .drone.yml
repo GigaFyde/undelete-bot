@@ -1,0 +1,20 @@
+kind: pipeline
+type: docker
+name: build
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+  - name: build-production-image
+    image: adoptopenjdk/openjdk16:x86_64-tumbleweed-jdk-16.0.2_7-slim
+    environment:
+      DOCKERHUB:
+        from_secret: dockerhub
+    commands:
+      - chmod +x gradlew
+      - ./gradlew jib --image=gigafyde/undelete:latest -Djib.to.auth.username=gigafyde -Djib.to.auth.password=$DOCKERHUB
+    when:
+      branch:
+        - master
