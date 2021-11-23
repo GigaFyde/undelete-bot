@@ -16,8 +16,8 @@ public class JoinListener extends ListenerAdapter {
                                     
                     You can help the group release faster by donating at https://patreon.com/platinumcrown
                     """).queue();
-        } catch (Exception ignored) {
-            //Do nothing if it fails
+        } catch (Exception e) {
+            System.out.println("Failed" + e.getMessage() );
         }
     }
 }
